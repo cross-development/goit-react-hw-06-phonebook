@@ -1,17 +1,20 @@
 //Core
 import React from 'react';
-import PropTypes from 'prop-types';
+//Redux
+import { connect } from 'react-redux';
+import contactsAction from '../../redux/contacts/contactsAction';
+//Types
+import filterTypes from './FilterTypes';
 //Styles
 import styles from './Filter.module.css';
 
-const Filter = ({ title, value, onChangeFilter }) => {
-	return (
+const Filter = ({ value, contacts, onChangeFilter }) =>
+	contacts.length > 1 && (
 		<div className={styles.filterWrapper}>
 			<label>
-				{title}
+				Find contacts by name
 				<input
-					className={styles.phonebookInput}
-					autoFocus
+					className={styles.input}
 					type="text"
 					autoComplete="off"
 					value={value}
@@ -20,16 +23,16 @@ const Filter = ({ title, value, onChangeFilter }) => {
 			</label>
 		</div>
 	);
+
+Filter.propTypes = filterTypes;
+
+const mapStateToProps = ({ contacts }) => ({
+	value: contacts.filter,
+	contacts: contacts.items,
+});
+
+const mapDispatchToProps = {
+	onChangeFilter: contactsAction.changeFilter,
 };
 
-Filter.defaultProps = {
-	title: '',
-};
-
-Filter.propTypes = {
-	title: PropTypes.string,
-	value: PropTypes.string.isRequired,
-	onChangeFilter: PropTypes.func.isRequired,
-};
-
-export default Filter;
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);

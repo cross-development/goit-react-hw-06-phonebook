@@ -1,71 +1,96 @@
 //Core
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { CSSTransition } from 'react-transition-group';
+//Redux
+import { connect } from 'react-redux';
+import contactsAction from '../../redux/contacts/contactsAction';
+//Types
+import contactFormTypes from './ContactFormTypes';
+//Components
+import Notification from '../Notification';
 //Styles
 import styles from './ContactForm.module.css';
+import fadeNotification from '../../animation/fadeNotification.module.css';
 
 export class ContactForm extends Component {
-	static propTypes = {
-		onAddContact: PropTypes.func.isRequired,
-	};
+	static propTypes = contactFormTypes;
 
 	state = {
 		name: '',
 		number: '',
+		isNotice: false,
 	};
 
-	handleChange = e => {
-		const { name, value } = e.target;
+	setNotificationTimeout = delay => setTimeout(() => this.setState({ isNotice: false }), delay);
 
-		this.setState({ [name]: value });
-	};
+	handleChange = e => this.setState({ [e.target.name]: e.target.value });
 
-	handleSubmit = e => {
+	handleFormSubmit = e => {
 		e.preventDefault();
 
-		const { name, number } = this.state;
+		const isContactExists = this.props.contacts.find(
+			({ name }) => name.toLowerCase() === this.state.name.toLowerCase(),
+		);
 
-		this.props.onAddContact(name, number);
+		if (isContactExists) {
+			this.setState({ name: '', number: '', isNotice: true });
+			return this.setNotificationTimeout(2000);
+		}
+
+		this.props.onAddContact(this.state.name, this.state.number);
 		this.setState({ name: '', number: '' });
 	};
 
 	render() {
-		const { name, number } = this.state;
+		const { name, number, isNotice } = this.state;
 
 		return (
-			<form className={styles.form} onSubmit={this.handleSubmit}>
-				<label>
-					Name
-					<input
-						className={styles.formInput}
-						autoFocus
-						type="text"
-						name="name"
-						autoComplete="off"
-						value={name}
-						onChange={this.handleChange}
-					/>
-				</label>
+			<>
+				<CSSTransition in={isNotice} classNames={fadeNotification} timeout={250} unmountOnExit>
+					<Notification />
+				</CSSTransition>
 
-				<label>
-					Number
-					<input
-						className={styles.formInput}
-						autoFocus
-						type="text"
-						name="number"
-						autoComplete="off"
-						value={number}
-						onChange={this.handleChange}
-					/>
-				</label>
+				<form className={styles.form} onSubmit={this.handleFormSubmit}>
+					<label>
+						Name
+						<input
+							className={styles.input}
+							autoFocus
+							type="text"
+							name="name"
+							autoComplete="off"
+							value={name}
+							onChange={this.handleChange}
+						/>
+					</label>
 
-				<button className={styles.contactFormButton} type="submit">
-					Add contact
-				</button>
-			</form>
+					<label>
+						Number
+						<input
+							className={styles.input}
+							type="text"
+							name="number"
+							autoComplete="off"
+							value={number}
+							onChange={this.handleChange}
+						/>
+					</label>
+
+					<button className={styles.button} type="submit">
+						Add contact
+					</button>
+				</form>
+			</>
 		);
 	}
 }
 
-export default ContactForm;
+const mapStateToProps = state => ({
+	contacts: state.contacts.items,
+});
+
+const mapDispatchToProps = {
+	onAddContact: contactsAction.addContact,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);

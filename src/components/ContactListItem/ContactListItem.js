@@ -1,28 +1,21 @@
 //Core
 import React from 'react';
-import PropTypes from 'prop-types';
+//Types
+import contactListItemTypes from './ContactListItemTypes';
 //Styles
 import styles from './ContactListItem.module.css';
 
-const ContactListItem = ({ name, number, onRemove }) => {
-	return (
-		<li className={styles.listItem}>
-			<p className={styles.contact}>
-				<span>{name}:</span> {number}
-			</p>
-			<div className={styles.contactAction}>
-				<button type="button" className={styles.contactListButton} onClick={onRemove}>
-					&#10006;
-				</button>
-			</div>
-		</li>
-	);
-};
+const ContactListItem = ({ name, number, onRemove }) => (
+	<li className={styles.listItem}>
+		<p className={styles.contact}>
+			<span>{name}:</span> {number}
+		</p>
+		<button type="button" className={styles.button} onClick={onRemove}>
+			&#10006;
+		</button>
+	</li>
+);
 
-ContactListItem.propTypes = {
-	name: PropTypes.string.isRequired,
-	number: PropTypes.string.isRequired,
-	onRemove: PropTypes.func.isRequired,
-};
+ContactListItem.propTypes = contactListItemTypes;
 
 export default ContactListItem;
