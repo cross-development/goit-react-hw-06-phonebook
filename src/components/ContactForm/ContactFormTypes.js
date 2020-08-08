@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const contactFormTypes = {
 	onAddContact: PropTypes.func.isRequired,
+
 	contacts: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.string.isRequired,
