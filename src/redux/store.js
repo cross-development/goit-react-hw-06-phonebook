@@ -1,4 +1,4 @@
-//Core
+//Redux
 import { configureStore } from '@reduxjs/toolkit';
 import contactsReducer from './contacts/contactsReducer';
 

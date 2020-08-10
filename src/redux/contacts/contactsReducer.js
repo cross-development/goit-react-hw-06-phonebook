@@ -1,4 +1,4 @@
-//Core
+//Redux
 import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
 import contactsAction from './contactsAction';

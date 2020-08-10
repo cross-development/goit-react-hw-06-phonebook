@@ -25,8 +25,8 @@ const ContactList = ({ contacts, onRemoveContact }) =>
 
 ContactList.propTypes = contactListTypes;
 
-const mapStateToProps = state => {
-	const { items, filter } = state.contacts;
+const mapStateToProps = ({ contacts }) => {
+	const { items, filter } = contacts;
 	const normalizedFilter = filter.toLowerCase();
 
 	return {

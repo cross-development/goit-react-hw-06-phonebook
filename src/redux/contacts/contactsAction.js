@@ -1,6 +1,7 @@
-//Core
-import { v4 as uuidv4 } from 'uuid';
+//Redux
 import { createAction } from '@reduxjs/toolkit';
+//Utils
+import { v4 as uuidv4 } from 'uuid';
 
 const addContact = createAction('contacts/add', (name, number) => ({
 	payload: {

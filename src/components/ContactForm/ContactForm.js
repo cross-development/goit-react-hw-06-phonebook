@@ -21,7 +21,7 @@ export class ContactForm extends Component {
 		isNotice: false,
 	};
 
-	setNotificationTimeout = delay => setTimeout(() => this.setState({ isNotice: false }), delay);
+	setNotificationTimeout = () => setTimeout(() => this.setState({ isNotice: false }), 2000);
 
 	handleChange = e => this.setState({ [e.target.name]: e.target.value });
 
@@ -34,7 +34,7 @@ export class ContactForm extends Component {
 
 		if (isContactExists) {
 			this.setState({ name: '', number: '', isNotice: true });
-			return this.setNotificationTimeout(2000);
+			return this.setNotificationTimeout();
 		}
 
 		this.props.onAddContact(this.state.name, this.state.number);
@@ -85,8 +85,8 @@ export class ContactForm extends Component {
 	}
 }
 
-const mapStateToProps = state => ({
-	contacts: state.contacts.items,
+const mapStateToProps = ({ contacts }) => ({
+	contacts: contacts.items,
 });
 
 const mapDispatchToProps = {
