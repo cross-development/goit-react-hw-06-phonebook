@@ -8,8 +8,8 @@ import Section from '../Section';
 import ContactList from '../ContactList';
 import ContactForm from '../ContactForm';
 //Styles
-import fadeFilter from '../../animation/fadeFilter.module.css';
-import fadeHeading from '../../animation/fadeHeading.module.css';
+import fadeFilter from 'animation/fadeFilter.module.css';
+import fadeHeading from 'animation/fadeHeading.module.css';
 
 const App = () => (
 	<Section>

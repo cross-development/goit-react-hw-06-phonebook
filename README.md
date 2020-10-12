@@ -18,7 +18,8 @@ index.js и css-модуль стиля.
 
 ### Папка redux
 
-В папке redux содержатся файл store и папка contacts с файлами reducer, action, action types для управления состоянием.
+В папке redux содержатся файл store и папка contacts с файлами reducer, action, action types для
+управления состоянием.
 
 ### Содержание файла компонента
 

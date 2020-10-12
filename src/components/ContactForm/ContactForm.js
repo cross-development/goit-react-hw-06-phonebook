@@ -1,19 +1,28 @@
 //Core
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 //Redux
 import { connect } from 'react-redux';
-import contactsAction from '../../redux/contacts/contactsAction';
-//Types
-import contactFormTypes from './ContactFormTypes';
+import contactsAction from 'redux/contacts/contactsAction';
 //Components
 import Notification from '../Notification';
 //Styles
 import styles from './ContactForm.module.css';
-import fadeNotification from '../../animation/fadeNotification.module.css';
+import fadeNotification from 'animation/fadeNotification.module.css';
 
 export class ContactForm extends Component {
-	static propTypes = contactFormTypes;
+	static propTypes = {
+		onAddContact: PropTypes.func.isRequired,
+
+		contacts: PropTypes.arrayOf(
+			PropTypes.shape({
+				id: PropTypes.string.isRequired,
+				name: PropTypes.string.isRequired,
+				number: PropTypes.string.isRequired,
+			}).isRequired,
+		).isRequired,
+	};
 
 	state = {
 		name: '',
@@ -54,12 +63,12 @@ export class ContactForm extends Component {
 					<label>
 						Name
 						<input
-							className={styles.input}
 							autoFocus
 							type="text"
 							name="name"
-							autoComplete="off"
 							value={name}
+							autoComplete="off"
+							className={styles.input}
 							onChange={this.handleChange}
 						/>
 					</label>
@@ -67,11 +76,11 @@ export class ContactForm extends Component {
 					<label>
 						Number
 						<input
-							className={styles.input}
 							type="text"
 							name="number"
-							autoComplete="off"
 							value={number}
+							autoComplete="off"
+							className={styles.input}
 							onChange={this.handleChange}
 						/>
 					</label>

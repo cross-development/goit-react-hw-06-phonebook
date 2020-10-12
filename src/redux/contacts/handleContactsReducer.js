@@ -4,6 +4,6 @@ const onChangeFilter = (state, { payload }) => payload;
 
 export default {
 	onAddContact,
-	onRemoveContact,
 	onChangeFilter,
+	onRemoveContact,
 };
